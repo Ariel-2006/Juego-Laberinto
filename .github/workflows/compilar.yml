@@ -10,20 +10,34 @@ jobs:
     runs-on: ubuntu-22.04
     name: Exportar Ejecutable
     steps:
-      - name: Obtener codigo
+      - name: Obtener codigo del repositorio
         uses: actions/checkout@v4
 
-      - name: Compilar con Godot
-        uses: firebelley/godot-export@v6.0.0
-        with:
-          # Descarga directa desde GitHub Releases (Servidores ultra estables)
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
-          relative_project_path: ./
-          archive_output: true
+      - name: Descargar e instalar Godot 4.4
+        run: |
+          # 1. Descargar binario de Godot 4.4
+          wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
+          unzip -q Godot_v4.4-stable_linux.x86_64.zip
+          mv Godot_v4.4-stable_linux.x86_64 godot
+          chmod +x godot
+
+          # 2. Descargar las plantillas oficiales de exportación
+          wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
+          unzip -q Godot_v4.4-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.4.stable
+          mv templates/* ~/.local/share/godot/export_templates/4.4.stable/
+
+      - name: Pre-importar recursos del juego (Paso 1)
+        run: |
+          ./godot --headless --editor --quit || true
+
+      - name: Compilar ejecutable para Windows (Paso 2)
+        run: |
+          mkdir -p build
+          ./godot --headless --export-release "Windows Desktop" build/JuegoLaberinto.exe
 
       - name: Guardar ejecutable como Artefacto
         uses: actions/upload-artifact@v4
         with:
           name: juego-compilado
-          path: /github/workspace/build/
+          path: build/
