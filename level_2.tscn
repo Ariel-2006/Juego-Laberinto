@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://b3qyccibothom"]
+
+[ext_resource type="PackedScene" uid="uid://bgv7qwvtfa081" path="res://node_2d.tscn" id="1_jg0dc"]
+[ext_resource type="PackedScene" uid="uid://ukx5lv257pu1" path="res://Player_1_2d.tscn" id="2_1y8me"]
+[ext_resource type="PackedScene" uid="uid://n5eb0qfc04ex" path="res://camera_2d.tscn" id="3_7j8ne"]
+[ext_resource type="PackedScene" uid="uid://dkdwxxfma2tgw" path="res://Bar_life.tscn" id="3_n7ypv"]
+[ext_resource type="PackedScene" uid="uid://cqufgfp8o18ct" path="res://Player_1/enemis/enemis.tscn" id="5_0s5r2"]
+[ext_resource type="PackedScene" uid="uid://8jxrp5er2avw" path="res://Player_1/enemis/enemis_2.tscn" id="6_7j8ne"]
+[ext_resource type="PackedScene" uid="uid://du7d25ld6lhl6" path="res://Player_1/enemis/enemis_3.tscn" id="7_7dov7"]
+[ext_resource type="Script" uid="uid://b551ownu3a5ff" path="res://area_2d.gd" id="8_7dov7"]
+[ext_resource type="PackedScene" uid="uid://b8dpfc3d5r5wy" path="res://cronometro.tscn" id="9_ehv2h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehv2h"]
+size = Vector2(35, 155)
+
+[node name="Level_2" type="Node2D"]
+
+[node name="StaticBody2D" parent="." instance=ExtResource("1_jg0dc")]
+position = Vector2(-248, -85)
+scale = Vector2(1.29896, 1.24524)
+
+[node name="cronometro" parent="." instance=ExtResource("9_ehv2h")]
+
+[node name="Player" parent="." instance=ExtResource("2_1y8me")]
+z_index = 1
+position = Vector2(-42, 265)
+scale = Vector2(1.12, 1.08)
+
+[node name="Camera2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_7j8ne")]
+z_index = 1
+position = Vector2(372, 393)
+target = NodePath("../Player")
+
+[node name="GUI" parent="." instance=ExtResource("3_n7ypv")]
+
+[node name="Enemy" parent="." instance=ExtResource("5_0s5r2")]
+z_index = 1
+position = Vector2(-69, -25)
+scale = Vector2(0.975834, 0.911839)
+
+[node name="Enemy2" parent="." instance=ExtResource("5_0s5r2")]
+z_index = 1
+position = Vector2(157, 486)
+scale = Vector2(0.928205, 0.818991)
+
+[node name="Enemy3" parent="." instance=ExtResource("5_0s5r2")]
+z_index = 1
+position = Vector2(488, 495)
+scale = Vector2(0.894739, 0.772798)
+
+[node name="enemis_2" parent="." instance=ExtResource("6_7j8ne")]
+z_index = 1
+position = Vector2(383, 365)
+scale = Vector2(0.577646, 0.59133)
+
+[node name="enemis_7" parent="." instance=ExtResource("6_7j8ne")]
+z_index = 1
+position = Vector2(1037, 9)
+scale = Vector2(0.888668, 0.867369)
+
+[node name="enemis_5" parent="." instance=ExtResource("6_7j8ne")]
+z_index = 1
+position = Vector2(938, 453)
+scale = Vector2(0.678893, 0.613526)
+
+[node name="enemis_4" parent="." instance=ExtResource("6_7j8ne")]
+z_index = 1
+position = Vector2(276, 446)
+scale = Vector2(0.66662, 0.663544)
+
+[node name="enemis_3" parent="." instance=ExtResource("7_7dov7")]
+z_index = 1
+position = Vector2(296, 137)
+
+[node name="enemis_6" parent="." instance=ExtResource("7_7dov7")]
+z_index = 1
+position = Vector2(1035, 218)
+
+[node name="Punto_nivel" type="Area2D" parent="." groups=["player"]]
+position = Vector2(1142, 256)
+script = ExtResource("8_7dov7")
+new_scene_path = "res://level_3.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Punto_nivel"]
+z_index = 1
+position = Vector2(-3.5, -113)
+shape = SubResource("RectangleShape2D_ehv2h")
+
+[connection signal="body_entered" from="Punto_nivel" to="Punto_nivel" method="_on_body_entered"]

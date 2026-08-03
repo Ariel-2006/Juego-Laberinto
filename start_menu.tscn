@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://bj6qdo2uso1k0"]
+
+[ext_resource type="Script" uid="uid://b1u8ajfnupgq3" path="res://start_menu.gd" id="1_v2mkm"]
+[ext_resource type="PackedScene" uid="uid://ctgyf1k2ld3px" path="res://menus/panel.tscn" id="1_vpdu5"]
+[ext_resource type="PackedScene" uid="uid://b8q7opkk1v1pw" path="res://menus/label.tscn" id="2_v2mkm"]
+[ext_resource type="Texture2D" uid="uid://dt2s6ak6vepwe" path="res://kenney_tiny-dungeon/Tilemap/background_layer_2.png" id="3_7boi2"]
+[ext_resource type="PackedScene" uid="uid://c471hhtagrlnf" path="res://menus/button.tscn" id="3_ctwoq"]
+[ext_resource type="Texture2D" uid="uid://dr44af8a28kij" path="res://kenney_tiny-dungeon/Tilemap/background_layer_3.png" id="3_ppfnh"]
+
+[node name="start_menu" type="CanvasLayer"]
+script = ExtResource("1_v2mkm")
+
+[node name="BackgroundLayer2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(583.5, 338)
+scale = Vector2(3.65313, 3.75556)
+texture = ExtResource("3_7boi2")
+
+[node name="BackgroundLayer3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(577.5, 330)
+scale = Vector2(3.59062, 3.62222)
+texture = ExtResource("3_ppfnh")
+
+[node name="Panel" parent="." instance=ExtResource("1_vpdu5")]
+
+[node name="Label" parent="." instance=ExtResource("2_v2mkm")]
+offset_left = 552.0
+offset_right = 597.0
+text = "Menu"
+
+[node name="salir" parent="." instance=ExtResource("3_ctwoq")]
+text = "Salir"
+
+[node name="stats" parent="." instance=ExtResource("3_ctwoq")]
+offset_top = 336.0
+offset_bottom = 368.0
+text = "Stats"
+
+[node name="play" parent="." instance=ExtResource("3_ctwoq")]
+offset_top = 288.0
+offset_bottom = 320.0
+text = "Jugar"
+
+[connection signal="pressed" from="salir" to="." method="_on_salir_pressed"]
+[connection signal="pressed" from="stats" to="." method="_on_stats_pressed"]
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]

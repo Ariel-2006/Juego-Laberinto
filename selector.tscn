@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://6nmbm1vqxyuv"]
+
+[ext_resource type="PackedScene" uid="uid://ctgyf1k2ld3px" path="res://menus/panel.tscn" id="1_pl5vu"]
+[ext_resource type="Script" uid="uid://dkfhok3fn46g8" path="res://selector.gd" id="1_ygee2"]
+[ext_resource type="PackedScene" uid="uid://cmb7q0s75dclm" path="res://menus/background_layer_1.tscn" id="2_n7q7y"]
+[ext_resource type="PackedScene" uid="uid://c471hhtagrlnf" path="res://menus/button.tscn" id="2_sqkg4"]
+[ext_resource type="PackedScene" uid="uid://vcxkwadmx1vt" path="res://menus/background_layer_2.tscn" id="3_b0sqd"]
+[ext_resource type="PackedScene" uid="uid://b8q7opkk1v1pw" path="res://menus/label.tscn" id="3_ygee2"]
+[ext_resource type="PackedScene" uid="uid://dynlgx4blg4f2" path="res://menus/background_layer_3.tscn" id="4_71e8h"]
+[ext_resource type="Texture2D" uid="uid://bdtwjwrwf3ocf" path="res://Los diablos mejeje/Wraith_01_Idle_000.png" id="4_sqkg4"]
+
+[node name="selector" type="CanvasLayer"]
+script = ExtResource("1_ygee2")
+
+[node name="BackgroundLayer1" parent="." instance=ExtResource("2_n7q7y")]
+position = Vector2(579.5, 369)
+
+[node name="BackgroundLayer2" parent="." instance=ExtResource("3_b0sqd")]
+position = Vector2(574.5, 366.5)
+
+[node name="BackgroundLayer3" parent="." instance=ExtResource("4_71e8h")]
+position = Vector2(575, 330.5)
+
+[node name="Panel" parent="." instance=ExtResource("1_pl5vu")]
+
+[node name="continuar" parent="." instance=ExtResource("2_sqkg4")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 116.0
+offset_right = 39.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "jugar"
+
+[node name="Label" parent="." instance=ExtResource("3_ygee2")]
+offset_left = 494.0
+offset_top = 163.0
+offset_right = 659.0
+offset_bottom = 187.0
+text = "Ingrese el un nombre"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 491.0
+offset_top = 194.0
+offset_right = 663.0
+offset_bottom = 225.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(576, 344)
+scale = Vector2(0.623077, 0.652381)
+texture = ExtResource("4_sqkg4")
+
+[node name="left" parent="." instance=ExtResource("2_sqkg4")]
+offset_left = 432.0
+offset_top = 336.0
+offset_right = 464.0
+offset_bottom = 368.0
+text = "<"
+
+[node name="rigth" parent="." instance=ExtResource("2_sqkg4")]
+offset_left = 688.0
+offset_top = 336.0
+offset_right = 720.0
+offset_bottom = 368.0
+text = ">"
+
+[node name="LabelAviso" parent="." instance=ExtResource("3_ygee2")]
+offset_left = 424.0
+offset_top = 474.0
+offset_right = 488.0
+offset_bottom = 498.0
+text = ""
+
+[connection signal="pressed" from="continuar" to="." method="_on_continuar_pressed"]
+[connection signal="pressed" from="left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="rigth" to="." method="_on_rigth_pressed"]

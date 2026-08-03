@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://ukx5lv257pu1"]
+
+[ext_resource type="Script" uid="uid://bo8geartv2cec" path="res://player_1_2d.gd" id="1_gn5py"]
+[ext_resource type="PackedScene" uid="uid://b3il4tyk6jaof" path="res://menus/animated_sprit_p_1.tscn" id="2_qi56a"]
+[ext_resource type="PackedScene" uid="uid://b1v1w6cu06x4g" path="res://menus/animated_sprit_p_2.tscn" id="3_2chlj"]
+[ext_resource type="PackedScene" uid="uid://ccv5iqwxqxf71" path="res://menus/animated_sprit_p_3.tscn" id="4_nss6q"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gn5py"]
+radius = 13.0
+height = 36.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0rxy"]
+size = Vector2(40, 61)
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_gn5py")
+
+[node name="Animated_sprit_p1" parent="." instance=ExtResource("2_qi56a")]
+position = Vector2(49, 65.9911)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(48, 68)
+shape = SubResource("CapsuleShape2D_gn5py")
+
+[node name="InvulTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="AttackArea" type="Area2D" parent="." groups=["enemigo"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" groups=["enemigo"]]
+position = Vector2(47, 62.5)
+shape = SubResource("RectangleShape2D_f0rxy")
+
+[node name="Animated_sprit_p2" parent="." instance=ExtResource("3_2chlj")]
+position = Vector2(48, 68)
+
+[node name="Animated_sprit_p3" parent="." instance=ExtResource("4_nss6q")]
+position = Vector2(48, 68)

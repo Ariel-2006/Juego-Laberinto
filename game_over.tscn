@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://rh4xdyh16x7g"]
+
+[ext_resource type="Script" uid="uid://cu46snibdkrua" path="res://game_over.gd" id="1_ftari"]
+[ext_resource type="PackedScene" uid="uid://ctgyf1k2ld3px" path="res://menus/panel.tscn" id="1_yxx3c"]
+[ext_resource type="PackedScene" uid="uid://c471hhtagrlnf" path="res://menus/button.tscn" id="2_ccer4"]
+[ext_resource type="PackedScene" uid="uid://cmb7q0s75dclm" path="res://menus/background_layer_1.tscn" id="2_fkf4o"]
+[ext_resource type="PackedScene" uid="uid://vcxkwadmx1vt" path="res://menus/background_layer_2.tscn" id="3_3u7xm"]
+[ext_resource type="PackedScene" uid="uid://b8q7opkk1v1pw" path="res://menus/label.tscn" id="3_8u835"]
+[ext_resource type="Texture2D" uid="uid://cuaf6bwfeoqj6" path="res://Player_1/Dead/Wraith_01_Dying_014.png" id="4_ftari"]
+[ext_resource type="PackedScene" uid="uid://dynlgx4blg4f2" path="res://menus/background_layer_3.tscn" id="4_woa3c"]
+
+[node name="game_over" type="CanvasLayer"]
+script = ExtResource("1_ftari")
+
+[node name="BackgroundLayer1" parent="." instance=ExtResource("2_fkf4o")]
+position = Vector2(584.75, 336)
+scale = Vector2(3.59532, 4.05556)
+
+[node name="BackgroundLayer2" parent="." instance=ExtResource("3_3u7xm")]
+position = Vector2(584, 336)
+
+[node name="BackgroundLayer3" parent="." instance=ExtResource("4_woa3c")]
+position = Vector2(576, 328)
+
+[node name="Panel" parent="." instance=ExtResource("1_yxx3c")]
+
+[node name="menu" parent="." instance=ExtResource("2_ccer4")]
+offset_left = 448.0
+offset_top = 416.0
+offset_right = 512.0
+offset_bottom = 448.0
+text = "Menu"
+
+[node name="stat_s" parent="." instance=ExtResource("2_ccer4")]
+offset_top = 416.0
+offset_bottom = 448.0
+text = "Stats"
+
+[node name="bac_k" parent="." instance=ExtResource("2_ccer4")]
+offset_left = 640.0
+offset_top = 416.0
+offset_right = 704.0
+offset_bottom = 448.0
+text = "Salir"
+
+[node name="Label" parent="." instance=ExtResource("3_8u835")]
+offset_left = 528.0
+offset_right = 624.0
+text = "GAME OVER"
+
+[node name="SpriteDead" type="Sprite2D" parent="."]
+position = Vector2(600, 280)
+scale = Vector2(0.688461, 0.735714)
+texture = ExtResource("4_ftari")
+
+[connection signal="pressed" from="menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="stat_s" to="." method="_on_stat_s_pressed"]
+[connection signal="pressed" from="bac_k" to="." method="_on_bac_k_pressed"]

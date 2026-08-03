@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkdwxxfma2tgw"]
+
+[ext_resource type="Script" uid="uid://dqunw3l6bbuha" path="res://bar_life.gd" id="1_wg1jf"]
+[ext_resource type="Texture2D" uid="uid://4qy0n1e673ex" path="res://Player_1/barra_vida/barr_complet.PNG" id="1_y43yw"]
+[ext_resource type="Texture2D" uid="uid://b7716jg5te0do" path="res://Player_1/barra_vida/color_rojo_bar.png" id="2_5b12x"]
+[ext_resource type="Texture2D" uid="uid://dul7kjf0mt8up" path="res://Player_1/barra_vida/color_Amarillo_bar.png" id="3_ydukd"]
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="BarrComplet" type="Sprite2D" parent="."]
+position = Vector2(990, 48)
+scale = Vector2(0.188064, 0.163717)
+texture = ExtResource("1_y43yw")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = 943.0
+offset_top = 36.0
+offset_right = 1066.0
+offset_bottom = 56.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_ydukd")
+texture_progress = ExtResource("2_5b12x")
+script = ExtResource("1_wg1jf")
