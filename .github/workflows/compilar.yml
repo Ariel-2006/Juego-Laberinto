@@ -7,7 +7,7 @@ on:
 
 jobs:
   export_game:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Exportar Ejecutable
     steps:
       - name: Obtener codigo
