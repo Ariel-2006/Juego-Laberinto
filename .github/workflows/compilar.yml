@@ -1,0 +1,29 @@
+name: "Compilar Juego de Godot"
+
+on:
+  push:
+    branches:
+      - main # Se ejecuta automáticamente cuando subes cambios a 'main'
+
+jobs:
+  export_game:
+    runs-on: ubuntu-latest
+    name: Exportar Ejecutable
+    steps:
+      - name: Obtener codigo
+        uses: actions/checkout@v4
+
+      - name: Compilar con Godot
+        uses: firebelley/godot-export@v6.0.0
+        with:
+          # Actualizado a Godot 4.4 stable:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.4/Godot_v4.4-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.4/Godot_v4.4-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
+
+      - name: Guardar ejecutable como Artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: juego-compilado
+          path: /github/workspace/build/
