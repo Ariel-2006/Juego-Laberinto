@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq6fkf6i1hks1"]
+
+[ext_resource type="Texture2D" uid="uid://b3mxoeo8llcio" path="res://Player_1/barra_vida/BLANCO.png" id="1_c57xx"]
+[ext_resource type="Texture2D" uid="uid://yq0ck6r8hwoj" path="res://Player_1/barra_vida/Bandera_verde.png" id="2_vixj4"]
+[ext_resource type="Script" uid="uid://djnj0l534o3b6" path="res://Player_1/barra_vida/texture_progress_bar_enemys.gd" id="3_n8hvf"]
+
+[node name="LifeBar" type="Node2D"]
+
+[node name="TextureProgressBar_Enemys" type="TextureProgressBar" parent="."]
+offset_left = 313.0
+offset_top = 116.0
+offset_right = 421.0
+offset_bottom = 121.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_under = ExtResource("1_c57xx")
+texture_progress = ExtResource("2_vixj4")
+script = ExtResource("3_n8hvf")

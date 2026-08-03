@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dynlgx4blg4f2"]
+
+[ext_resource type="Texture2D" uid="uid://dr44af8a28kij" path="res://kenney_tiny-dungeon/Tilemap/background_layer_3.png" id="1_g2ns0"]
+
+[node name="BackgroundLayer3" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(3.5875, 3.66111)
+texture = ExtResource("1_g2ns0")

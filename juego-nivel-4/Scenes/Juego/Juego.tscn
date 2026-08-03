@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpfb1kf3owkn5"]
+
+[ext_resource type="PackedScene" uid="uid://caurhabtbaxg6" path="res://Scenes/Characters/link_minish.tscn" id="1_5ivke"]
+[ext_resource type="PackedScene" uid="uid://b4k2ckkhidtr7" path="res://Scenes/Escenas/Escena laberinto 4.tscn" id="2_5ivke"]
+[ext_resource type="PackedScene" uid="uid://c0yuxfa4ob7jo" path="res://Scenes/Escenas/Fondo_Laberinto.tscn" id="3_q4fe7"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap2" parent="." instance=ExtResource("3_q4fe7")]
+visible = false
+
+[node name="TileMap" parent="." instance=ExtResource("2_5ivke")]
+
+[node name="Link_Minish" parent="." instance=ExtResource("1_5ivke")]
+position = Vector2(31, -156)

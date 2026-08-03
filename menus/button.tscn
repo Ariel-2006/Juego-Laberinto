@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://c471hhtagrlnf"]
+
+[ext_resource type="Texture2D" uid="uid://dnil4b1sc6jxa" path="res://kenney_tiny-dungeon/Tilemap/tile_0022.png" id="1_6hb2w"]
+[ext_resource type="Texture2D" uid="uid://q4mah1x51f0t" path="res://kenney_tiny-dungeon/Tilemap/tile_0035.png" id="2_0u78o"]
+[ext_resource type="Texture2D" uid="uid://b687xsm24jbys" path="res://kenney_tiny-dungeon/Tilemap/tile_0016.png" id="3_6hb2w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6hb2w"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a8i6t"]
+texture = ExtResource("1_6hb2w")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ct845"]
+texture = ExtResource("2_0u78o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4qphg"]
+texture = ExtResource("3_6hb2w")
+
+[node name="Button" type="Button"]
+texture_filter = 1
+offset_left = 544.0
+offset_top = 384.0
+offset_right = 608.0
+offset_bottom = 416.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6hb2w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_a8i6t")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ct845")
+theme_override_styles/normal = SubResource("StyleBoxTexture_4qphg")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctgyf1k2ld3px"]
+
+[ext_resource type="Texture2D" uid="uid://b6exypuhkeoqj" path="res://menus/06 Border 04.png" id="1_b0cug"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rv8ai"]
+texture = ExtResource("1_b0cug")
+
+[node name="Panel" type="Panel"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -225.0
+offset_right = 225.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rv8ai")

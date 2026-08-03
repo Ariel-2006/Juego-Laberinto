@@ -1,0 +1,228 @@
+[gd_scene load_steps=50 format=3 uid="uid://8jxrp5er2avw"]
+
+[ext_resource type="Script" uid="uid://c5yxrp7kfph3b" path="res://Player_1/enemis/enemis_2.gd" id="1_2iowu"]
+[ext_resource type="Texture2D" uid="uid://pc5dc6624ehx" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_000.png" id="1_dihb8"]
+[ext_resource type="Texture2D" uid="uid://d1g4s3nyly4d3" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_000.png" id="1_uqyel"]
+[ext_resource type="Texture2D" uid="uid://dlascsmfv26l8" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_001.png" id="2_2iowu"]
+[ext_resource type="Texture2D" uid="uid://cecyjgulksrmk" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_001.png" id="2_6ee1r"]
+[ext_resource type="Texture2D" uid="uid://dvxqv7n54afv4" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_002.png" id="3_0tbkk"]
+[ext_resource type="Texture2D" uid="uid://ck1kv0l4m5m0k" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_002.png" id="3_rovp4"]
+[ext_resource type="Texture2D" uid="uid://b3qwxew3ydcph" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_003.png" id="4_3uwt5"]
+[ext_resource type="Texture2D" uid="uid://gvnygj2ts2cd" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_003.png" id="4_8ic1v"]
+[ext_resource type="Texture2D" uid="uid://bcwsy8b7yxx6" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_004.png" id="5_0g13a"]
+[ext_resource type="Texture2D" uid="uid://b4hkiwohq8j4k" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_004.png" id="5_y1y2d"]
+[ext_resource type="Texture2D" uid="uid://8ns77mmcncds" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_005.png" id="6_8hgyq"]
+[ext_resource type="Texture2D" uid="uid://du208vww2n6nq" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_005.png" id="6_86kyq"]
+[ext_resource type="Texture2D" uid="uid://bp7w4j0ato56a" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_006.png" id="7_8eu0r"]
+[ext_resource type="Texture2D" uid="uid://caouwp7ul7nvb" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_006.png" id="7_uqyel"]
+[ext_resource type="Texture2D" uid="uid://dx22an3sh25fo" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_007.png" id="8_2iowu"]
+[ext_resource type="Texture2D" uid="uid://dhq2jwtqvvrs4" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_007.png" id="8_rhish"]
+[ext_resource type="Texture2D" uid="uid://d0drtwnw8qvxv" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_008.png" id="9_0tbkk"]
+[ext_resource type="Texture2D" uid="uid://bueaigf3esm03" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_008.png" id="9_x27sc"]
+[ext_resource type="Texture2D" uid="uid://bs0xa277wwmjl" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_009.png" id="10_8ic1v"]
+[ext_resource type="Texture2D" uid="uid://1pqvdlypgddr" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_009.png" id="10_xs6ua"]
+[ext_resource type="Texture2D" uid="uid://c1riimkyc2d6j" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_010.png" id="11_0g13a"]
+[ext_resource type="Texture2D" uid="uid://by5n4du4xp8jp" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_010.png" id="11_hdfok"]
+[ext_resource type="Texture2D" uid="uid://3l64qntnhgcf" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Attacking/Golem_02_Attacking_011.png" id="12_86kyq"]
+[ext_resource type="Texture2D" uid="uid://dkmbt3r671ad3" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_011.png" id="12_hq6ai"]
+[ext_resource type="Texture2D" uid="uid://clrbb21werug" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_012.png" id="13_0nexf"]
+[ext_resource type="Texture2D" uid="uid://mmgoi6avarjr" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_000.png" id="14_apjqx"]
+[ext_resource type="Texture2D" uid="uid://5i6k8g0blmay" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_013.png" id="14_j7qjn"]
+[ext_resource type="Texture2D" uid="uid://ea61mqimhi8v" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_014.png" id="15_jl8aa"]
+[ext_resource type="Texture2D" uid="uid://cv7fmnjwou7ft" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_001.png" id="15_ywudt"]
+[ext_resource type="Texture2D" uid="uid://bbpa6u02oen4j" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_015.png" id="16_feekx"]
+[ext_resource type="Texture2D" uid="uid://db1owkdx8day3" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_002.png" id="16_vvrqf"]
+[ext_resource type="Texture2D" uid="uid://bpvyep3p3w201" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_003.png" id="17_h7pcp"]
+[ext_resource type="Texture2D" uid="uid://72v26erata0e" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_016.png" id="17_rlqrk"]
+[ext_resource type="Texture2D" uid="uid://bytxod6eewcfq" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Walking/Golem_02_Walking_017.png" id="18_3w3p1"]
+[ext_resource type="Texture2D" uid="uid://cmpj6bdy4qwl1" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_004.png" id="18_7h4s4"]
+[ext_resource type="Texture2D" uid="uid://bqqtt76sdrtb2" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_005.png" id="19_1thgm"]
+[ext_resource type="Texture2D" uid="uid://gma1r3ac5cbk" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_006.png" id="20_af2w4"]
+[ext_resource type="Texture2D" uid="uid://bog50rxytfb3k" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_007.png" id="21_t7027"]
+[ext_resource type="Texture2D" uid="uid://cp8tjmrtd5gnu" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_008.png" id="22_e8l8l"]
+[ext_resource type="Texture2D" uid="uid://b7xthxrmg0ff0" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_009.png" id="23_0h8bi"]
+[ext_resource type="Texture2D" uid="uid://c2cv3uatlrfp3" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_010.png" id="24_wj1pu"]
+[ext_resource type="Texture2D" uid="uid://cibtr4i2g1u2e" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_011.png" id="25_41y3m"]
+[ext_resource type="Texture2D" uid="uid://dcvhbi23a7e4d" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_012.png" id="26_7hhua"]
+[ext_resource type="Texture2D" uid="uid://cgnc4v3dwqmvr" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_013.png" id="27_xve12"]
+[ext_resource type="Texture2D" uid="uid://djjnhdw6hc723" path="res://Player_1/enemis/PNG/Golem_02/PNG Sequences/Dying/Golem_02_Dying_014.png" id="28_82fnd"]
+[ext_resource type="PackedScene" uid="uid://bq6fkf6i1hks1" path="res://Player_1/barra_vida/LifeBar.tscn" id="47_ywudt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8eu0r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dihb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6ee1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rovp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3uwt5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y1y2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8hgyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uqyel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2iowu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0tbkk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_8ic1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0g13a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_86kyq")
+}],
+"loop": false,
+"name": &"atack_enemi2",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_apjqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ywudt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vvrqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_h7pcp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_7h4s4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_1thgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_af2w4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_t7027")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_e8l8l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_0h8bi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_wj1pu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_41y3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_7hhua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_xve12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_82fnd")
+}],
+"loop": false,
+"name": &"dead_enemi2",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uqyel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2iowu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0tbkk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8ic1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_0g13a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_86kyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8eu0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rhish")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x27sc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_xs6ua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hdfok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hq6ai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_0nexf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_j7qjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_jl8aa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_feekx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_rlqrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_3w3p1")
+}],
+"loop": true,
+"name": &"enemi_animation2",
+"speed": 16.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rhish"]
+radius = 18.0
+height = 64.0
+
+[node name="enemis_2" type="CharacterBody2D" groups=["enemigo"]]
+script = ExtResource("1_2iowu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(71, 70)
+scale = Vector2(0.160417, 0.180208)
+sprite_frames = SubResource("SpriteFrames_8eu0r")
+animation = &"dead_enemi2"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(65, 78)
+shape = SubResource("CapsuleShape2D_rhish")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="EnemyLifeBar" parent="." instance=ExtResource("47_ywudt")]
+position = Vector2(-213, -76)
+scale = Vector2(0.754555, 0.924732)

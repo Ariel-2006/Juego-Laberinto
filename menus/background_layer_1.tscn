@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmb7q0s75dclm"]
+
+[ext_resource type="Texture2D" uid="uid://bhosvuxhg41pf" path="res://kenney_tiny-dungeon/Tilemap/background_layer_1.png" id="1_vupor"]
+
+[node name="BackgroundLayer1" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(3.59063, 4.05556)
+texture = ExtResource("1_vupor")
