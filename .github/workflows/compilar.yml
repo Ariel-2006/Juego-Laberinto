@@ -13,15 +13,18 @@ jobs:
       - name: Obtener codigo del repositorio
         uses: actions/checkout@v4
 
+      - name: Instalar dependencias del sistema para Godot
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libglvnd-dev libx11-6 libxcursor1 libxi6 libxinerama1 libxrandr2 libxrender1 libxtst6 libasound2
+
       - name: Descargar e instalar Godot 4.4
         run: |
-          # 1. Descargar binario de Godot 4.4
           wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
           unzip -q Godot_v4.4-stable_linux.x86_64.zip
           mv Godot_v4.4-stable_linux.x86_64 godot
           chmod +x godot
 
-          # 2. Descargar las plantillas oficiales de exportación
           wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
           unzip -q Godot_v4.4-stable_export_templates.tpz
           mkdir -p ~/.local/share/godot/export_templates/4.4.stable
