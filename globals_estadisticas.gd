@@ -14,21 +14,23 @@ const characters_paths = [
 		"Run": "res://Player_2/Casting Spells/",  # corregido
 		"Ataque": "res://Player_2/Attacking/",
 		"Dead": "res://Player_2/Dead/",
-		"Idle_bling": "res://Player_2/Idle_bling/"
+		"Idle_bling": "res://Player_2/Idle Blink/"
 	},
 	{
 		"Idle": "res://Player_3/Idle/",
 		"Run": "res://Player_3/Casting Spells/",  # corregido
 		"Ataque": "res://Player_3/Attacking/",
 		"Dead": "res://Player_3/Dead/",
-		"Idle_bling": "res://Player_3/Idle_bling/"
+		"Idle_bling": "res://Player_3/Idle Blink/"
 	}
 ]
 	
 
 # Declaro un diccionario llamado estadisticas_jugador para almacenar información clave del jugador
 @export var estadisticas_jugador := {
-	"nombre": $LineEdit,  # Nombre del jugador por defecto
+	"nombre": "",  # Nombre del jugador (lo llena selector.gd)
+	"selected_character": 0,  # Personaje elegido
+	"vida_restante": 0,  # Vida con la que terminó
 	"puntaje_niveles_tot": 0,  # Puntaje total acumulado en todos los niveles
 	"niveles_superados_tot": 0,  # Total de niveles que el jugador ha superado
 	"tiempo_juego": 0.0,  # Tiempo total jugado en segundos
@@ -115,36 +117,32 @@ func imprimir_estadisticas_json():
 
 # Variables para manejo de ruta y archivo en el sistema operativo
 
-var ruta_escritorio := OS.get_environment("USERPROFILE") + "/Desktop"  
-# Obtengo la ruta del escritorio del usuario en Windows mediante variable de entorno USERPROFILE
-
-var carpeta_datos := ruta_escritorio + "/datos"  
-# Defino la ruta de la carpeta "datos" que estará dentro del escritorio
-
-var archivo_jugadores := carpeta_datos + "/jugadores.json"  
-# Defino la ruta final donde guardaré el archivo JSON con datos de jugadores
+# user:// es la carpeta de datos que Godot le reserva al juego en cada sistema.
+# Antes esto apuntaba al Escritorio de Windows, lo cual fallaba si el Escritorio
+# estaba sincronizado con OneDrive y NO existe en la versión web del juego.
+var archivo_jugadores := "user://jugadores.json"
 
 # Función para guardar datos del jugador en un archivo JSON en la carpeta "datos" del escritorio
 func guardar_datos_jugador():
 	var nombre_actual = estadisticas_jugador["nombre"]  # Obtengo el nombre del jugador actual
 	var jugadores = {}  # Inicializo un diccionario para almacenar los datos de todos los jugadores
 
-	# Compruebo si la carpeta "datos" existe; si no, la creo
-	if not DirAccess.dir_exists_absolute(carpeta_datos):
-		var dir = DirAccess.open(ruta_escritorio)  # Abro la ruta del escritorio
-		if dir:
-			dir.make_dir("datos")  # Creo la carpeta "datos"
-			print("Carpeta con nombre 'datos' creada en el Escritorio")
+	# Si no hay nombre, no guardo nada (evita entradas basura)
+	if nombre_actual == null or str(nombre_actual).strip_edges() == "":
+		print("Sin nombre de jugador, no se guarda.")
+		return
 
 	# Si el archivo JSON ya existe, lo abro y leo su contenido
 	if FileAccess.file_exists(archivo_jugadores):
-		var archivo_lectura = FileAccess.open(archivo_jugadores, FileAccess.READ)  # Abro en modo lectura
-		var contenido = archivo_lectura.get_as_text()  # Leo el contenido como texto
-		archivo_lectura.close()  # Cierro el archivo
+		var archivo_lectura = FileAccess.open(archivo_jugadores, FileAccess.READ)
+		var contenido = archivo_lectura.get_as_text()
+		archivo_lectura.close()
 
 		if contenido.strip_edges() != "":
-			# Si el archivo no está vacío, convierto el JSON en diccionario y asigno a jugadores
-			jugadores = JSON.parse_string(contenido)
+			var leido = JSON.parse_string(contenido)
+			# Si el archivo estaba corrupto, JSON devuelve null: arranco de cero
+			if leido is Dictionary:
+				jugadores = leido
 
 	# Actualizo o agrego la información del jugador actual al diccionario jugadores
 	jugadores[nombre_actual] = estadisticas_jugador.duplicate()

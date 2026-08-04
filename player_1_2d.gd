@@ -65,26 +65,50 @@ func cargar_personaje():
 
 	for anim_name in anim_paths.keys():
 		var path = anim_paths[anim_name]
-		var dir = DirAccess.open(path)
-		if dir:
-			var files = []
-			dir.list_dir_begin()
-			var file_name = dir.get_next()
-			while file_name != "":
-				if file_name.ends_with(".png"):
-					files.append(file_name)
-				file_name = dir.get_next()
-			dir.list_dir_end()
-			files.sort()
+		var files = listar_imagenes(path)
 
-			new_sprite_frames.add_animation(anim_name)
-			for file in files:
-				var texture = load(path + "/" + file)
+		if files.is_empty():
+			printerr("Sin imágenes para la animación '", anim_name, "' en ", path)
+			continue
+
+		new_sprite_frames.add_animation(anim_name)
+		for file in files:
+			var texture = load(path.path_join(file))
+			if texture:
 				new_sprite_frames.add_frame(anim_name, texture)
-		else:
-			print("No se pudo abrir el directorio: ", path)
 
 	animated_sprite.frames = new_sprite_frames
+
+
+# Devuelve los nombres de imagen de una carpeta, funcionando IGUAL dentro del
+# editor y dentro del .exe/.web ya exportado.
+#
+# Por qué hace falta: al exportar, Godot NO empaqueta los .png originales.
+# Solo guarda el archivo .png.import y la textura ya convertida. Entonces un
+# listado que busque ".png" encuentra 0 archivos y el personaje sale invisible.
+# La solución es quitarle el sufijo .import (o .remap) a lo que se lista.
+func listar_imagenes(ruta: String) -> Array:
+	var vistos := {}
+	var dir = DirAccess.open(ruta)
+	if dir == null:
+		printerr("No se pudo abrir el directorio: ", ruta)
+		return []
+
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		var limpio = file_name
+		if limpio.ends_with(".import") or limpio.ends_with(".remap"):
+			limpio = limpio.get_basename()
+		var ext = limpio.get_extension().to_lower()
+		if ext == "png" or ext == "jpg" or ext == "jpeg":
+			vistos[limpio] = true   # el diccionario evita duplicados
+		file_name = dir.get_next()
+	dir.list_dir_end()
+
+	var lista = vistos.keys()
+	lista.sort()
+	return lista
 
 func _ready():
 	cargar_personaje()
