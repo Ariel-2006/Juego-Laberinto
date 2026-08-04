@@ -1,8 +1,8 @@
 extends Node2D
 
-@export var new_scene_path: String  # exportamos esa escena o niivel como un path para el cambio entre niveles desde el inspector
+@export var new_scene_path: String  # La ruta del siguiente nivel se asigna desde el inspector.
 
-func change_scene():
-	# Guardar el tiempo acumulado antes de cambiar de escena o nivel
-	GlobalsEstadisticas.tiempo_acumulado = GlobalsEstadisticas.estadisticas_jugador["tiempo_juego"]
-	get_tree().change_scene_to_file(new_scene_path)
+# Nota: aquí había una función change_scene() que nadie llamaba y que además
+# usaba GlobalsEstadisticas.tiempo_acumulado, una variable que NO existe en el
+# autoload: si alguien la hubiera llamado, el juego se caía. El cambio de nivel
+# lo hace el Area2D "Punto_nivel" con area_2d.gd.

@@ -206,8 +206,13 @@ func reaccionar_impacto(from_direction: Vector2):
 	inmune = true
 	animated_sprite.modulate = Color(1, 0, 0)
 
+	# Si el golpe venía justo de arriba o de abajo, sign(x) daba 0: el empuje
+	# quedaba en cero Y ADEMAS se bloqueaba el control. El jugador quedaba
+	# clavado contra el diablo sin poder escapar. Ahora siempre hay dirección.
 	var direccion_horizontal = sign(from_direction.x)
-	var retroceso = Vector2(direccion_horizontal * 300, -100)
+	if direccion_horizontal == 0:
+		direccion_horizontal = -1.0 if animated_sprite.flip_h else 1.0
+	var retroceso = Vector2(direccion_horizontal * 260, -80)
 	velocity = retroceso
 	forzando_retroceso = true
 
@@ -215,9 +220,13 @@ func reaccionar_impacto(from_direction: Vector2):
 		animacion_muerte()
 		return
 
-	await get_tree().create_timer(0.5).timeout
+	# Antes: 0.5 s sin control + 0.7 s de inmunidad. Como el diablo volvía a
+	# golpear apenas terminaba la inmunidad, perdías el control casi la mitad
+	# del tiempo y era imposible huir. Ahora el bloqueo dura lo justo para que
+	# se note el golpe, y la inmunidad es más larga para poder escapar.
+	await get_tree().create_timer(0.15).timeout
 	forzando_retroceso = false
-	await get_tree().create_timer(0.7).timeout
+	await get_tree().create_timer(1.05).timeout
 	inmune = false
 	animated_sprite.modulate = Color(1, 1, 1)
 

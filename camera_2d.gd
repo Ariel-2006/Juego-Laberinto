@@ -9,11 +9,11 @@ func _process(delta: float):
 		return  # Si no hay objetivo asignado, simplemente no hago nada
 
 	# Calculo la posición objetivo sumando el offset al objetivo (jugador)
-	var target_position = target.position + target_offset
+	var target_position = target.global_position + target_offset  # global_position: funciona aunque el jugador no cuelgue de la raíz del nivel
 
 	# Uso interpolación lineal (lerp) para mover suavemente la cámara hacia la posición objetivo
 	# Cuanto mayor es smooth_speed, más rápido se alcanza el objetivo
-	position = position.lerp(target_position, smooth_speed * delta)
+	global_position = global_position.lerp(target_position, smooth_speed * delta)
 
 	# Fuerzo que el scroll del viewport se actualice inmediatamente con la nueva posición de la cámara
 	force_update_scroll()
