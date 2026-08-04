@@ -158,9 +158,9 @@ func guardar_datos_jugador():
 
 var selected_character = 0
 const characters = [
-	preload("res://Los diablos mejeje/Wraith_01_Idle_000.png"),
-	preload("res://Los diablos mejeje/Wraith_02_Idle_000.png"),
-	preload("res://Los diablos mejeje/Wraith_03_Idle_000.png"),
+	preload("res://Diablos/Wraith_01_Idle_000.png"),
+	preload("res://Diablos/Wraith_02_Idle_000.png"),
+	preload("res://Diablos/Wraith_03_Idle_000.png"),
 ]
 
 
@@ -171,7 +171,7 @@ const characters_dead = [
 ]
 
 const characters_stats = [
-	preload("res://Los diablos mejeje/Wraith_01_Idle_000.png"),
-	preload("res://Los diablos mejeje/Wraith_02_Idle_000.png"),
-	preload("res://Los diablos mejeje/Wraith_03_Idle_000.png"),
+	preload("res://Diablos/Wraith_01_Idle_000.png"),
+	preload("res://Diablos/Wraith_02_Idle_000.png"),
+	preload("res://Diablos/Wraith_03_Idle_000.png"),
 ]

@@ -4,54 +4,97 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.4
 
 jobs:
   export_game:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: Exportar Ejecutable
+
     steps:
       - name: Obtener codigo del repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Instalar controladores graficos y librerias de Linux
+      - name: Descargar Godot y plantillas de exportacion
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libgl1 \
-            libgl1-mesa-dri \
-            mesa-vulkan-drivers \
-            libvulkan1 \
-            libx11-6 \
-            libxcursor1 \
-            libxi6 \
-            libxinerama1 \
-            libxrandr2 \
-            libxrender1 \
-            libasound2
+          BASE="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
 
-      - name: Descargar e instalar Godot 4.4
-        run: |
-          wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
-          unzip -q Godot_v4.4-stable_linux.x86_64.zip
-          mv Godot_v4.4-stable_linux.x86_64 godot
+          wget -q "$BASE/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" godot
           chmod +x godot
 
-          wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
-          unzip -q Godot_v4.4-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/4.4.stable
-          mv templates/* ~/.local/share/godot/export_templates/4.4.stable/
+          wget -q "$BASE/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
 
-      - name: Pre-importar recursos del juego (Paso 1)
+          ./godot --version
+
+      # Verificacion barata que evita el crash silencioso (exit 134).
+      # Godot revienta si encuentra un project.godot dentro de una subcarpeta.
+      - name: Verificar que no hay proyectos Godot anidados
         run: |
-          ./godot --headless --audio-driver Dummy --editor --quit || true
+          ANIDADOS=$(find . -mindepth 2 -name project.godot -not -path "./.git/*" || true)
+          if [ -n "$ANIDADOS" ]; then
+            echo "::error::Hay project.godot anidados. Godot va a crashear (exit 134). Borralos:"
+            echo "$ANIDADOS"
+            exit 1
+          fi
+          echo "OK: solo hay un project.godot en la raiz."
 
-      - name: Compilar ejecutable para Windows (Paso 2)
+      - name: Importar recursos del proyecto
         run: |
-          mkdir -p build
-          ./godot --headless --audio-driver Dummy --export-release "Windows Desktop" build/JuegoLaberinto.exe
+          ./godot --headless --audio-driver Dummy --import
 
-      - name: Guardar ejecutable como Artefacto
+      - name: Exportar ejecutable de Windows
+        run: |
+          mkdir -p build/windows
+          ./godot --headless --audio-driver Dummy \
+            --export-release "Windows Desktop" build/windows/JuegoLaberinto.exe
+          ls -lh build/windows
+
+      - name: Exportar version Web (HTML5)
+        run: |
+          mkdir -p build/web
+          ./godot --headless --audio-driver Dummy \
+            --export-release "Web" build/web/index.html
+          touch build/web/.nojekyll
+          ls -lh build/web
+
+      - name: Guardar ejecutable de Windows
         uses: actions/upload-artifact@v4
         with:
-          name: juego-compilado
-          path: build/
+          name: juego-windows
+          path: build/windows/
+
+      - name: Guardar version Web
+        uses: actions/upload-artifact@v4
+        with:
+          name: juego-web
+          path: build/web/
+
+      - name: Preparar artefacto para GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  # Publica la version web en https://ariel-2006.github.io/Juego-Laberinto/
+  # Requiere activar Pages en Settings > Pages > Source: GitHub Actions
+  publicar_web:
+    needs: export_game
+    runs-on: ubuntu-latest
+    name: Publicar version Web
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
