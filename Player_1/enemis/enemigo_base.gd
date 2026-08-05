@@ -20,6 +20,7 @@ const ESPERA_ENTRE_GIROS := 0.25      # segundos mínimos entre un giro y el sig
 
 @export var enemy_type: String = ""   # si se deja vacío usa el primer tipo de la tabla
 @export var salud_maxima := 3
+@export var multiplicador_velocidad := 1.0   # 1.0 = normal; se sube por enemigo desde la escena del nivel
 
 var animated_sprite: AnimatedSprite2D
 var attack_timer: Timer
@@ -29,7 +30,8 @@ var salud := 0
 var config: Dictionary
 var current_direction: Vector2
 var is_attacking := false
-var espera_giro := 0.0   # cuenta atrás para no girar varias veces por segundo
+var espera_giro := 0.0                        # cuenta atrás para no girar varias veces por segundo
+var direccion_tras_ataque := Vector2.ZERO     # hacia dónde se irá cuando termine de atacar
 
 
 # Cada enemigo concreto sobreescribe esta función con sus propios tipos.
@@ -101,6 +103,7 @@ func get_enemy_config(type_name: String) -> Dictionary:
 
 	# Los enemigos van un poco más rápido en cada nivel: 60, 65, 70, 76.
 	elegido["move_speed"] *= 1.0 + AUMENTO_POR_NIVEL * nivel_actual()
+	elegido["move_speed"] *= multiplicador_velocidad
 	return elegido
 
 
@@ -139,7 +142,13 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 		if not is_attacking:
 			is_attacking = true
 			play_animation(config["attack_animation"], true)
-			attack_timer.start(0.1)
+
+			# El ataque termina por TIEMPO, no esperando animation_finished.
+			# Antes se hacía "await animated_sprite.animation_finished", y si
+			# algo cambiaba de animación en medio (por ejemplo al girar), esa
+			# señal no llegaba nunca: is_attacking se quedaba en true para
+			# siempre y el diablo quedaba congelado sin caminar ni atacar.
+			attack_timer.start(duracion_animacion(config["attack_animation"]))
 
 			if collider.has_method("reaccionar_impacto"):
 				# Uso la posición del SPRITE, no la del nodo: el origen está a
@@ -149,12 +158,13 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 				var direccion: Vector2 = collider.global_position - animated_sprite.global_position
 				collider.reaccionar_impacto(direccion)
 
-			# Tras golpear, el diablo se da la vuelta y se aleja solo, en vez
-			# de quedarse encima del jugador impidiéndole escapar.
-			girar_alejandose(-collision.get_normal(), true)
+				# Al terminar el golpe se irá en sentido contrario al jugador,
+				# para no quedarse encima impidiéndole escapar.
+				if abs(direccion.x) > 0.1:
+					direccion_tras_ataque = Vector2(-signf(direccion.x), 0)
 	else:
 		# Chocó con una pared
-		girar_alejandose(collision.get_normal(), false)
+		girar_alejandose(collision.get_normal())
 
 
 # Cambia de sentido usando la normal de la colisión, que apunta hacia el lado
@@ -162,8 +172,8 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 # quedaba encajado chocaba cada frame, se invertía cada frame y se quedaba
 # oscilando en el sitio. Y como la animación se reiniciaba también cada frame,
 # se veía siempre el cuadro 0: ese era el titileo.
-func girar_alejandose(normal: Vector2, forzar: bool) -> void:
-	if espera_giro > 0.0 and not forzar:
+func girar_alejandose(normal: Vector2) -> void:
+	if is_attacking or espera_giro > 0.0:
 		return
 
 	var nueva := current_direction
@@ -188,11 +198,29 @@ func play_animation(anim_name: String, force: bool = false) -> void:
 
 
 func _on_attack_timer_timeout() -> void:
-	if is_attacking:
-		await animated_sprite.animation_finished
-		is_attacking = false
-		play_animation(config["walk_animation"], true)
-		set_random_attack_timer()
+	if not is_attacking:
+		return
+
+	is_attacking = false
+
+	if direccion_tras_ataque != Vector2.ZERO:
+		current_direction = direccion_tras_ataque
+		direccion_tras_ataque = Vector2.ZERO
+		update_sprite_direction()
+
+	play_animation(config["walk_animation"], true)
+	set_random_attack_timer()
+
+
+# Cuánto dura una animación en segundos, leída del propio SpriteFrames.
+func duracion_animacion(nombre: String) -> float:
+	var sf := animated_sprite.sprite_frames
+	if sf == null or not sf.has_animation(nombre):
+		return 0.7
+	var fps := sf.get_animation_speed(nombre)
+	if fps <= 0.0:
+		return 0.7
+	return sf.get_frame_count(nombre) / fps
 
 
 func set_random_attack_timer() -> void:

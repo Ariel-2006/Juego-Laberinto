@@ -9,9 +9,15 @@ func _ready() -> void:
 	# píxeles del jugador) y se desliza hasta él durante el primer segundo.
 	# Ese deslizamiento es el "gesto" raro que se ve al empezar: no se mueve el
 	# personaje, se mueve el encuadre.
+	# La escena de la cámara trae activado el suavizado PROPIO de Godot
+	# (position_smoothing_enabled). Ese suavizado se sumaba al lerp de este
+	# script, así que aunque colocáramos la cámara en su sitio, Godot la
+	# seguía arrastrando desde su posición anterior: eso era la "caidita".
+	position_smoothing_enabled = false   # el suavizado ya lo hace _process
 	if target:
 		global_position = target.global_position + target_offset
-		force_update_scroll()
+	reset_smoothing()      # descarta cualquier arrastre pendiente
+	force_update_scroll()
 
 
 func _process(delta: float):

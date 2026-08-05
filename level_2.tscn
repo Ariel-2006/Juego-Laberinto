@@ -34,6 +34,7 @@ target = NodePath("../Player")
 [node name="GUI" parent="." instance=ExtResource("3_n7ypv")]
 
 [node name="Enemy" parent="." instance=ExtResource("5_0s5r2")]
+multiplicador_velocidad = 1.15
 z_index = 1
 position = Vector2(-69, -25)
 scale = Vector2(0.975834, 0.911839)
@@ -54,6 +55,7 @@ position = Vector2(383, 365)
 scale = Vector2(0.577646, 0.59133)
 
 [node name="enemis_7" parent="." instance=ExtResource("6_7j8ne")]
+multiplicador_velocidad = 1.15
 z_index = 1
 position = Vector2(1037, 9)
 scale = Vector2(0.888668, 0.867369)
@@ -69,6 +71,7 @@ position = Vector2(276, 446)
 scale = Vector2(0.66662, 0.663544)
 
 [node name="enemis_3" parent="." instance=ExtResource("7_7dov7")]
+multiplicador_velocidad = 1.15
 z_index = 1
 position = Vector2(296, 137)
 

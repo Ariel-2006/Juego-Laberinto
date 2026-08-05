@@ -27,8 +27,6 @@ var muerto := false
 var movement := {
 	"speed": speed,
 	"vertical_speed": vertical_speed,
-	"gravity": gravity,
-	"gravity_enabled": true
 }
 
 var animation := {
@@ -114,7 +112,6 @@ func _ready():
 	cargar_personaje()
 
 	attack_area.monitoring = false
-	movement.gravity_enabled = true
 	velocity = Vector2.ZERO
 	animated_sprite.connect("animation_finished", _on_animation_finished)
 	attack_area.body_entered.connect(_on_attack_area_body_entered)
@@ -125,6 +122,41 @@ func _ready():
 		barra_life.value = salud
 	else:
 		printerr("No se encontró la barra de vida.")
+
+# --- Ayuda para colocar enemigos nuevos ---------------------------------
+# Con F1 se enciende/apaga un texto que muestra la posición del jugador en el
+# mundo. Sirve para caminar hasta un punto del laberinto y anotar sus
+# coordenadas exactas, sin necesidad de abrir el editor de Godot.
+var _lector_pos: Label = null
+
+func _alternar_lector() -> void:
+	if _lector_pos == null:
+		var capa := CanvasLayer.new()
+		capa.layer = 100
+		add_child(capa)
+		_lector_pos = Label.new()
+		_lector_pos.position = Vector2(14, 14)
+		_lector_pos.add_theme_font_size_override("font_size", 20)
+		_lector_pos.add_theme_color_override("font_color", Color(1, 1, 0.3))
+		_lector_pos.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		_lector_pos.add_theme_constant_override("outline_size", 6)
+		capa.add_child(_lector_pos)
+	else:
+		_lector_pos.visible = not _lector_pos.visible
+
+
+func _process(_delta):
+	if Input.is_key_pressed(KEY_F1) and not _f1_pulsada:
+		_f1_pulsada = true
+		_alternar_lector()
+	elif not Input.is_key_pressed(KEY_F1):
+		_f1_pulsada = false
+
+	if _lector_pos and _lector_pos.visible:
+		_lector_pos.text = "x: %d    y: %d" % [round(global_position.x), round(global_position.y)]
+
+var _f1_pulsada := false
+
 
 func _physics_process(delta):
 	if muerto:
@@ -139,17 +171,20 @@ func _physics_process(delta):
 	update_animation(animated_sprite)
 	move_and_slide()
 
-func handle_movement(delta: float, input_dir: Vector2) -> void:
-	if not forzando_retroceso:
-		velocity.x = input_dir.x * movement.speed
+func handle_movement(_delta: float, input_dir: Vector2) -> void:
+	# Movimiento libre en 4 direcciones, SIN gravedad.
+	#
+	# Antes el jugador caía hasta tocar el suelo y ahí la gravedad se apagaba
+	# para siempre. Esa caída inicial es la "caidita" que se ve al empezar el
+	# nivel, y además dejaba volar por encima de todo el laberinto. El juego
+	# nunca tuvo tecla de salto: la gravedad era un resto de la plantilla.
+	if forzando_retroceso:
+		return   # durante el empujón del golpe mando yo, no el jugador
 
-	if movement.gravity_enabled:
-		velocity.y += movement.gravity * delta
-		if is_on_floor():
-			movement.gravity_enabled = false
-			velocity.y = 0
-	else:
-		velocity.y = input_dir.y * movement.vertical_speed
+	velocity = Vector2(
+		input_dir.x * movement.speed,
+		input_dir.y * movement.vertical_speed
+	)
 
 func start_attack():
 	if muerto:
@@ -184,9 +219,12 @@ func update_animation(sprite: AnimatedSprite2D) -> void:
 			sprite.play("Ataque")
 		return
 
-	if velocity.x != 0:
+	if velocity.length() > 1.0:
 		sprite.play("Run")
-		sprite.flip_h = velocity.x < 0
+		# Solo giro el sprite si hay movimiento horizontal; si va recto hacia
+		# arriba o abajo, conservo la orientación que ya tenía.
+		if velocity.x != 0:
+			sprite.flip_h = velocity.x < 0
 	else:
 		if sprite.animation == "Idle":
 			animation.idle_time += get_process_delta_time()
@@ -209,11 +247,13 @@ func reaccionar_impacto(from_direction: Vector2):
 	# Si el golpe venía justo de arriba o de abajo, sign(x) daba 0: el empuje
 	# quedaba en cero Y ADEMAS se bloqueaba el control. El jugador quedaba
 	# clavado contra el diablo sin poder escapar. Ahora siempre hay dirección.
-	var direccion_horizontal = sign(from_direction.x)
-	if direccion_horizontal == 0:
-		direccion_horizontal = -1.0 if animated_sprite.flip_h else 1.0
-	var retroceso = Vector2(direccion_horizontal * 260, -80)
-	velocity = retroceso
+	# Sin gravedad, el empujón va en la dirección REAL del golpe. Antes solo
+	# empujaba en horizontal, y si el diablo pegaba desde arriba o abajo el
+	# empuje quedaba en cero y el jugador se quedaba clavado contra él.
+	var direccion = from_direction.normalized()
+	if direccion == Vector2.ZERO:
+		direccion = Vector2.LEFT if animated_sprite.flip_h else Vector2.RIGHT
+	velocity = direccion * 280
 	forzando_retroceso = true
 
 	if salud <= 0:
