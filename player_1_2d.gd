@@ -224,9 +224,9 @@ func reaccionar_impacto(from_direction: Vector2):
 	# golpear apenas terminaba la inmunidad, perdías el control casi la mitad
 	# del tiempo y era imposible huir. Ahora el bloqueo dura lo justo para que
 	# se note el golpe, y la inmunidad es más larga para poder escapar.
-	await get_tree().create_timer(0.15).timeout
+	await get_tree().create_timer(0.25).timeout
 	forzando_retroceso = false
-	await get_tree().create_timer(1.05).timeout
+	await get_tree().create_timer(0.95).timeout
 	inmune = false
 	animated_sprite.modulate = Color(1, 1, 1)
 

@@ -4,6 +4,16 @@ extends Camera2D
 @export var target_offset: Vector2 = Vector2.ZERO  # Offset opcional que me permite mover la cámara respecto al jugador (por ejemplo, que no esté centrada)
 @export var smooth_speed: float = 5.0  # Esta velocidad controla qué tan rápido la cámara sigue al objetivo (mayor valor = más rápida)
 
+func _ready() -> void:
+	# Sin esto la cámara arranca donde la dejó el editor (en el nivel 1, a 332
+	# píxeles del jugador) y se desliza hasta él durante el primer segundo.
+	# Ese deslizamiento es el "gesto" raro que se ve al empezar: no se mueve el
+	# personaje, se mueve el encuadre.
+	if target:
+		global_position = target.global_position + target_offset
+		force_update_scroll()
+
+
 func _process(delta: float):
 	if !target:
 		return  # Si no hay objetivo asignado, simplemente no hago nada
